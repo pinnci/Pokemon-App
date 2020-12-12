@@ -1,15 +1,25 @@
 import React from 'react';
 
+//Components
+import Search from '../Components/Search';
+
 //Styles
 import './Header.scss';
 
+//Logo
+import image from '../Img/pokemon-logo.png';
+
 const Header = () =>{
     return(
-        <div className="Header">
-            <div className="Header__intro">
-                <h1>Pokédex</h1>
+        <nav>
+            <div className="nav__logo">
+                <img src={image} alt="pokemon-logo" />
             </div>
-        </div>
+
+            <div className="nav__search">
+                <Search />
+            </div>
+        </nav>
     )
 }
 

@@ -1,5 +1,6 @@
 .Pokemon{
     width: 20%;
+    height: 100px;
     min-width: 150px;
     margin: .5em;
     padding: 1em;
@@ -13,6 +14,7 @@
     background-repeat: no-repeat;
     background-position:top -10px right -10px;
     background-size: 150px;
+    position: relative;
 
     &:hover{
         cursor: pointer;
@@ -23,7 +25,11 @@
     .Pokemon__info{
         h2{
             margin: 0;
-            font-size: 1.5em;
+            font-size: 1.2em;
+        }
+
+        .Pokemon__abilities{
+            display: block;
         }
 
         .Pokemon__abilities p{
@@ -38,6 +44,9 @@
     }
 
     .Pokemon__image{
-        width: 100px;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        width:100px;
     }
 }

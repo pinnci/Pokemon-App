@@ -1,6 +1,23 @@
-.Header{
-    h1{
-        font-size: 3em;
-        margin-top: 1em;
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0;
+    margin:1em 0;
+
+    .nav__logo{
+        width: 150px;
+    }
+
+    .nav__search{
+        input{
+            padding:.5em 1em;
+            border-radius: .4em;
+            width: 100%;
+            font-size: .9em;
+            border: 1px solid darken(#f3f4f9,10%);
+            outline: none;
+            box-sizing: border-box;
+        }
     }
 }
