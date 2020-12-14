@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 //Selector, Dispatch
 import { useDispatch } from 'react-redux';
@@ -7,36 +7,35 @@ import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 
 //Actions
-import {addPokemons} from '../Actions/addPokemons.js';
+import {addPokemons} from '../Actions/FetchActions.js';
 import {turnOffLoading} from '../Actions/LoadingActions';
+import {turnOnLoading} from '../Actions/LoadingActions';
+import {showErrorScreen} from '../Actions/ErrorActions';
 
 //Axios
 import axios from 'axios';
 
-//Components
-import Loading from '../Components/Loading';
-
-//Styles
-import './Intro.scss';
-
-const IntroView = () => {
+const InitialFetch = () => {
     const dispatch = useDispatch();
-
+    
+    //Simulate loading screen
     const debounceMainViewAnimation = debounce(()=>{
         dispatch(turnOffLoading());
-    },1000);
+    },3000);
 
-    //When app starts, get all pokemons, then get additional pokemon info (id, name, image url, type, abilities)
+    //When app starts, get 9 pokemons, then get additional pokemon info (id, name, image url, type, abilities)
     useEffect(()=>{
-        axios.get('https://pokeapi.co/api/v2/pokemon/?limit=1000')
+        dispatch(turnOnLoading());
+
+        axios.get('https://pokeapi.co/api/v2/pokemon/?limit=9')
         .then(function(response){
+            
             let pokemonUrls=[];
             response.data.results.map(result => pokemonUrls.push(result.url))
 
             //Get additional info
             pokemonUrls.map(url => axios.get(url)
-            .then(function(response){
-                
+            .then(function(response){    
                 //If pokemons name contains - do not add him to state. 
                 //We want only main pokemon forms, but there were plenty of secondary forms which were divided by -
                 if(response.data.name.indexOf('-') >= 0){
@@ -48,7 +47,21 @@ const IntroView = () => {
                         name : capitalize(response.data.name),
                         image : response.data.sprites.front_default,
                         type : response.data.types[0].type.name,
-                        abilities : response.data.abilities.map(ability =>ability.ability.name)
+                        abilities : response.data.abilities.map(ability =>capitalize(ability.ability.name)),
+                        stats: response.data.stats.map(stat=> {
+                                    return {
+                                        stat: capitalize(stat.stat.name),
+                                        value:stat.base_stat
+                                    }
+                                }),
+                        weight : response.data.weight,
+                        height : response.data.height,
+                        sprites : [
+                            response.data.sprites.front_default,
+                            response.data.sprites.back_default,
+                            response.data.sprites.front_shiny,
+                            response.data.sprites.back_shiny,
+                        ]
                     }
     
                     //Send to redux state
@@ -57,9 +70,14 @@ const IntroView = () => {
                     //Turn off loading
                     debounceMainViewAnimation();
                     }
-            }));
+
+            }))
+
+        }).catch(error => {
+            dispatch(turnOffLoading())
+            dispatch(showErrorScreen())
         });
-    },[]);
+    },[debounceMainViewAnimation,dispatch]);
 
     //Capitalize strings
     const capitalize = (string) =>{
@@ -67,10 +85,8 @@ const IntroView = () => {
     }
 
     return(
-        <div className="view intro">
-            <Loading />
-        </div>
+        null
     )
 }
 
-export default IntroView;
+export default InitialFetch;

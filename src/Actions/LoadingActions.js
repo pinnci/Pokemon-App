@@ -4,7 +4,7 @@ export const turnOffLoading = () =>{
     }
 }
 
-export const turnOnnLoading = () =>{
+export const turnOnLoading = () =>{
     return{
         type:'TURN_ON'
     }

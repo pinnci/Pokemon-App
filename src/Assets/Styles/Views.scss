@@ -1,0 +1,30 @@
+.view.error{
+    .error__message{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+
+        img{
+            margin-top: 1em;
+            width: 250px ;
+        }
+
+        .error__message__text{
+            text-align: center;
+        }
+
+        #refresh{
+            margin-top: 1em;
+            width: 40px;
+            stroke:none;
+            fill: #999;
+            transition: .3s ease;
+            
+            &:hover{
+                fill: #222;
+            }
+        }
+ 
+    }
+}

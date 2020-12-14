@@ -1,0 +1,29 @@
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0;
+    margin:1em 0;
+    position: relative;
+
+    .nav__arrowback{
+        width: 30px;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        stroke:none;
+        
+        svg{
+            fill: #999;
+            transition: .3s ease;
+            
+            &:hover{
+                fill: #222;
+            }
+        }
+    }
+
+    .nav__logo{
+        width: 200px;
+    }
+}

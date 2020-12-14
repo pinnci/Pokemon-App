@@ -1,50 +1,32 @@
 //Selector
 import { useSelector } from 'react-redux';
 
+//Link
+import { Link } from 'react-router-dom';
+
 //Components
 import Pokemon from './Pokemon';
 
-//Styles
-import './ListPokemons.scss';
-
 const ListPokemons = () =>{
-    const allPokemons = useSelector(store => store.AllPokemons);
+    const Pokemons = useSelector(store => store.Pokemons);
 
-    const searchedValue = useSelector(store => store.SearchedPokemon);
-
-    //Render first 9 pokemons or render searched pokemon
+    //Render fetched pokemons
     const listPokemons = () =>{
         let result = [];
-        if(!searchedValue){
-            result =  allPokemons.slice(0,9).map( (pokemon,i) => 
+
+        result =  Pokemons.map( (pokemon,i) => 
+        <div className="Pokemon" key={i}>
+            <Link to={`/pokemons/${pokemon.id}`}>
                 <Pokemon 
                     key={i} 
                     name={pokemon.name} 
                     image={pokemon.image}
                     type={pokemon.type}
                     abilities={pokemon.abilities}
-                    />
-            )
-        }else{
-           allPokemons.map( (pokemon,i) =>{
-               if(pokemon.name.toLowerCase().substr(0,searchedValue.length) === searchedValue.toLowerCase()){
-                   result.push(                  
-                        <Pokemon 
-                            key={i} 
-                            name={pokemon.name} 
-                            image={pokemon.image}
-                            type={pokemon.type}
-                            abilities={pokemon.abilities}
-                        />
-                    );
-               }
-           }) 
-        }
-        
-        //If there's no pokemon with name equals to searchedString
-        if(result.length < 1){
-            result = <p>Oops.. There's no pokemon with that name !</p>
-        }
+                />
+            </Link>
+        </div>
+        )
 
         return result;
     };

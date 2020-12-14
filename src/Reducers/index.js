@@ -1,14 +1,15 @@
+//Combine reducers
 import { combineReducers } from 'redux';
 
 //Reducers
 import LoadingReducer from './LoadingRecuder';
 import PokemonReducer from './PokemonReducer';
-import SearchReducer from './SearchReducer';
+import ErrorReducer from './ErrorReducer';
 
-const allReducers = combineReducers({
+const AllReducers = combineReducers({
     Loading : LoadingReducer,
-    AllPokemons : PokemonReducer,
-    SearchedPokemon : SearchReducer
+    Pokemons : PokemonReducer,
+    Error : ErrorReducer
 });
 
-export default allReducers;
+export default AllReducers;
