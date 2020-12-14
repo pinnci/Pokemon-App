@@ -1,6 +1,6 @@
-export const addPokemons = (pokemons) =>{
+export const initialFetch = (pokemons) =>{
     return{
-        type : 'ADD',
+        type : 'initialFetch',
         payload : pokemons
     }
 }

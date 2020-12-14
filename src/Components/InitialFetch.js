@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 
 //Actions
-import {addPokemons} from '../Actions/FetchActions.js';
+import {initialFetch} from '../Actions/FetchActions.js';
 import {turnOffLoading} from '../Actions/LoadingActions';
 import {turnOnLoading} from '../Actions/LoadingActions';
 import {showErrorScreen} from '../Actions/ErrorActions';
@@ -17,6 +17,11 @@ import axios from 'axios';
 
 const InitialFetch = () => {
     const dispatch = useDispatch();
+
+    //Capitalize strings
+    const capitalize = (string) =>{
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     
     //Simulate loading screen
     const debounceMainViewAnimation = debounce(()=>{
@@ -49,11 +54,11 @@ const InitialFetch = () => {
                         type : response.data.types[0].type.name,
                         abilities : response.data.abilities.map(ability =>capitalize(ability.ability.name)),
                         stats: response.data.stats.map(stat=> {
-                                    return {
-                                        stat: capitalize(stat.stat.name),
-                                        value:stat.base_stat
-                                    }
-                                }),
+                                return {
+                                    stat: capitalize(stat.stat.name),
+                                    value:stat.base_stat
+                                }
+                            }),
                         weight : response.data.weight,
                         height : response.data.height,
                         sprites : [
@@ -65,11 +70,11 @@ const InitialFetch = () => {
                     }
     
                     //Send to redux state
-                    dispatch(addPokemons(newPokemon));
+                    dispatch(initialFetch(newPokemon));
                     
                     //Turn off loading
                     debounceMainViewAnimation();
-                    }
+                }
 
             }))
 
@@ -78,11 +83,6 @@ const InitialFetch = () => {
             dispatch(showErrorScreen())
         });
     },[debounceMainViewAnimation,dispatch]);
-
-    //Capitalize strings
-    const capitalize = (string) =>{
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
 
     return(
         null

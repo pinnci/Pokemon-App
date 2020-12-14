@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import image from '../Assets/Img/pokemon-logo.png';
 
 //Arrow Icon
-import LeftArrow from './LeftArrow';
+import LeftArrow from '../Assets/Icons/LeftArrow';
 
 const Navigation = () =>{
     const location = window.location.pathname;

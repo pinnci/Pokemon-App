@@ -2,7 +2,7 @@ const initialState=[];
 
 const PokemonReducer = (state=initialState,action) =>{
     switch(action.type){
-        case 'ADD':
+        case 'initialFetch':
             return [
                 ...state,
                 action.payload

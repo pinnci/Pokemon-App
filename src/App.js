@@ -32,7 +32,8 @@ function App(){
               <PokemonDetailView />
             </Route>
 
-               {isError ? <Redirect exact to="/error" /> : null}
+            {isError ? <Redirect exact to="/error" /> : null}
+            
             <Route path="/error">
               <ErrorView />
             </Route>
