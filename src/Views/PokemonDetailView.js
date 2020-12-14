@@ -24,6 +24,7 @@ const PokemonDetailView = () =>{
     }
 
     const Pokemons = useSelector(state => state.Pokemons);
+
     let {id} = useParams();
     id = parseInt(id);
 

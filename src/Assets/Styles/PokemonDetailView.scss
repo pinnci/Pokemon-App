@@ -6,6 +6,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background: url('../Img/pokemon-detail-hero-background.svg');
+        background-position-y: -10px ;
     
         .PokemonDetail__hero__image{
             margin-right: 1em;
