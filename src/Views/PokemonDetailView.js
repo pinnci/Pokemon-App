@@ -10,6 +10,8 @@ import { useParams } from "react-router-dom";
 //Selector , dispatch
 import { useSelector,useDispatch } from 'react-redux';
 
+import {debounce} from 'lodash';
+
 //Actions
 import {pokemonDetailFetch} from '../Actions/pokemonDetailFetch.js';
 import {turnOffLoading} from '../Actions/LoadingActions';
@@ -51,53 +53,64 @@ const PokemonDetailView = () =>{
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+    //Simulate loading screen
+    const debounceDetailViewAnimation = debounce(()=>{
+        dispatch(turnOffLoading());
+    },3000);
+
     useEffect(()=>{
-        dispatch(turnOnLoading());
+        if(!thisPokemon.id || thisPokemon.id !== Number(id)){
+            dispatch(turnOnLoading());
 
-        axios.get(url)
-        .then(function(response){
-
-            if(response.data.name.indexOf('-') >= 0){
-                return
-            }else{
-                //Create new pokemon object
-                let newPokemon = {
-                    id : response.data.id,
-                    name : capitalize(response.data.name),
-                    image : response.data.sprites.front_default,
-                    type : response.data.types[0].type.name,
-                    abilities : response.data.abilities.map(ability =>capitalize(ability.ability.name)),
-                    stats: response.data.stats.map(stat=> {
-                                return {
-                                    stat: capitalize(stat.stat.name),
-                                    value:stat.base_stat
-                                }
-                            }),
-                    weight : response.data.weight,
-                    height : response.data.height,
-                    sprites : [
-                        response.data.sprites.front_default,
-                        response.data.sprites.back_default,
-                        response.data.sprites.front_shiny,
-                        response.data.sprites.back_shiny,
-                    ]
+            axios.get(url)
+            .then(function(response){
+    
+                if(response.data.name.indexOf('-') >= 0){
+                    return
+                }else{
+                    //Create new pokemon object
+                    let newPokemon = {
+                        id : response.data.id,
+                        name : capitalize(response.data.name),
+                        image : response.data.sprites.front_default,
+                        type : response.data.types[0].type.name,
+                        abilities : response.data.abilities.map(ability =>capitalize(ability.ability.name)),
+                        stats: response.data.stats.map(stat=> {
+                                    return {
+                                        stat: capitalize(stat.stat.name),
+                                        value:stat.base_stat
+                                    }
+                                }),
+                        weight : response.data.weight,
+                        height : response.data.height,
+                        sprites : [
+                            response.data.sprites.front_default,
+                            response.data.sprites.back_default,
+                            response.data.sprites.front_shiny,
+                            response.data.sprites.back_shiny,
+                        ]
+                    }
+    
+                    //Insert Pokemon detail to state
+                    dispatch(pokemonDetailFetch(newPokemon))
+    
+                    //Turn off loading
+                    debounceDetailViewAnimation();
+    
+                    //Switch pokemon background color depending on type of pokemon
+                    setBackgroundColor(colorSwitcher(newPokemon.type));
                 }
+            }).catch(err =>{
+                dispatch(showErrorScreen());
+            });
+        }else{
+            //Change colors in pokemon detail page
+            setBackgroundColor(colorSwitcher(thisPokemon.type))
+        }
+    },[dispatch,url,thisPokemon,debounceDetailViewAnimation,id])
 
-                //Insert Pokemon detail to state
-                dispatch(pokemonDetailFetch(newPokemon))
-
-                //Turn off loading
-                dispatch(turnOffLoading());
-
-                //Switch pokemon background color depending on type of pokemon
-                setBackgroundColor(colorSwitcher(newPokemon.type));
-            }
-        }).catch(err =>{
-            dispatch(showErrorScreen());
-        });
-    },[dispatch,url])
-
-    if(thisPokemon){
+    //Prevent fetching data when pokemon was already fetched
+    if(thisPokemon.id === Number(id)){
         content =
         <div>
             <div className="PokemonDetail__hero" style={{backgroundColor:backgroundColor}}>
@@ -146,14 +159,13 @@ const PokemonDetailView = () =>{
             </div> 
         </div>
     }else{
-        return null
+        content = '';
     }
     
     return(
         <div className="PokemonDetail">
-            {isLoading ? <Loading /> : null}
-        <Navigation />
-        {content}
+            <Navigation />
+            {isLoading ? <Loading /> : content}
         </div>
     )
 }
