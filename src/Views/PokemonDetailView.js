@@ -1,5 +1,5 @@
 //useState, useEffect
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 //Axios
 import axios from 'axios';
@@ -10,7 +10,10 @@ import { useParams } from "react-router-dom";
 //Selector , dispatch
 import { useSelector,useDispatch } from 'react-redux';
 
+//Debounce
 import {debounce} from 'lodash';
+
+import {CSSTransition} from 'react-transition-group';
 
 //Actions
 import {pokemonDetailFetch} from '../Actions/pokemonDetailFetch.js';
@@ -22,8 +25,7 @@ import {showErrorScreen} from '../Actions/ErrorActions';
 import Navigation from '../Components/Navigation';
 import Loading from '../Components/Loading';
 
-//Color switcher function
-import {colorSwitcher} from '../Components/PokemonSwitchColor';
+import PokemonDetail from '../Components/PokemonDetail';
 
 const PokemonDetailView = () =>{
     const dispatch = useDispatch();
@@ -31,22 +33,11 @@ const PokemonDetailView = () =>{
 
     const isLoading = useSelector(store => store.Loading)
 
-    const [backgroundColor, setBackgroundColor] = useState(null);
-
-    //Create ref on hero image
-    let heroImage = useRef(null);
-
     //Extract ID
     let {id} = useParams();
     let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
 
     let content = null;
-
-    //Change hero image 
-    const changeHeroImage = (e) =>{
-        const clickedImageUrl = e.target.src;
-        heroImage.current.src = clickedImageUrl
-    }
 
     //Capitalize strings
     const capitalize = (string) =>{
@@ -96,68 +87,19 @@ const PokemonDetailView = () =>{
     
                     //Turn off loading
                     debounceDetailViewAnimation();
-    
-                    //Switch pokemon background color depending on type of pokemon
-                    setBackgroundColor(colorSwitcher(newPokemon.type));
                 }
             }).catch(err =>{
                 dispatch(showErrorScreen());
             });
         }else{
-            //Change colors in pokemon detail page
-            setBackgroundColor(colorSwitcher(thisPokemon.type))
+            return
         }
     },[dispatch,url,thisPokemon,debounceDetailViewAnimation,id])
 
     //Prevent fetching data when pokemon was already fetched
     if(thisPokemon.id === Number(id)){
-        content =
-        <div>
-            <div className="PokemonDetail__hero" style={{backgroundColor:backgroundColor}}>
-                <div className="PokemonDetail__hero__image">
-                    <img src={thisPokemon.image} alt={`${thisPokemon.name}`} ref={heroImage} />
-                </div>  
-            </div>
+        content = <PokemonDetail thisPokemon={thisPokemon} />
 
-            <div className="PokemonDetail__main">
-                <div className="PokemonDetail__main__info">
-                    <h1>{thisPokemon.name}</h1>
-                    <p style={{backgroundColor:backgroundColor}}>{thisPokemon.type.toUpperCase()}</p>
-                </div>
-
-                <div className="PokemonDetail__main__stats__container">
-                    <div className="PokemonDetail__main__stats__column">
-                        <h3 style={{color:backgroundColor}}>Stats</h3>
-                        {thisPokemon.stats.map( (stat,i) => {
-                            return <p key={i}>{stat.stat} : {stat.value}</p>
-                        })}
-                    </div>
-
-                    <div className="PokemonDetail__main__stats__column">
-                        <h3 style={{color:backgroundColor}}>Abilities</h3>
-                        {thisPokemon.abilities.map( (ability,i) => {
-                            return <p key={i}>{ability}</p>
-                        })}
-                    </div>
-
-                    <div className="PokemonDetail__main__stats__column">
-                        <h3 style={{color:backgroundColor}}>Dimensions</h3>
-                        <p>Height : {thisPokemon.height * 10} cm</p>
-                        <p>Weight : {thisPokemon.weight / 10} kg</p>
-                    </div>
-
-                    <div className="PokemonDetail__main__stats__column">
-                        <h3 style={{color:backgroundColor}}>Sprites</h3>
-
-                        <div className="PokemonDetail__main__stats__column__sprites">
-                            {thisPokemon.sprites.map( (sprite,i) =>{
-                                return <img src={sprite} key={i} alt="sprite" onClick={changeHeroImage} />
-                            })}
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
     }else{
         content = '';
     }
@@ -165,7 +107,17 @@ const PokemonDetailView = () =>{
     return(
         <div className="PokemonDetail">
             <Navigation />
-            {isLoading ? <Loading /> : content}
+            
+            {isLoading ? <Loading /> : ''}
+                <CSSTransition 
+                    in={!isLoading && thisPokemon.id === Number(id)}
+                    timeout={300}
+                    classNames="animate-list"
+                    unmountOnExit>
+                        <div key="transition-group-content">
+                            {content}
+                        </div>
+                </CSSTransition>
         </div>
     )
 }
