@@ -75,7 +75,6 @@ const InitialFetch = () => {
                     //Turn off loading
                     debounceMainViewAnimation();
                 }
-
             }))
 
         }).catch(error => {

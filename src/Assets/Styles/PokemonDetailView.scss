@@ -54,6 +54,10 @@
                 text-align: center;
             }
 
+            .PokemonDetail__main__stats__column:nth-child(2){
+                margin-right: 1em;
+            }
+
             .PokemonDetail__main__stats__column__sprites{
                 display: flex;
                 flex-flow: row wrap;
