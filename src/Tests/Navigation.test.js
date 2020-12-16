@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 
 //Component
-import Navigation from "./Navigation";
+import Navigation from "../Components/Navigation";
 
 const wrapper = shallow(<Navigation />);
 
@@ -15,6 +15,7 @@ describe("Navigation", () => {
     const img = wrapper.find("img");
     img.simulate("click");
     const location = window.location.pathname;
+
     expect(location).toBe("/");
   });
 });

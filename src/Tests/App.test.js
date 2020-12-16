@@ -7,9 +7,10 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 //Reducer
-import AllReducers from "./Reducers/";
+import AllReducers from "../Reducers";
 
-import App from "./App";
+//App
+import App from "../App";
 
 const store = createStore(
   AllReducers,

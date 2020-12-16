@@ -30,8 +30,9 @@ const PokemonDetail = (props) => {
         <div className="PokemonDetail__hero__image">
           <img
             src={thisPokemon.image}
-            alt={`${thisPokemon.name}`}
+            alt={thisPokemon.name}
             ref={heroImage}
+            id="PokemonDetail__hero__image"
           />
         </div>
       </div>
@@ -39,7 +40,10 @@ const PokemonDetail = (props) => {
       <div className="PokemonDetail__main">
         <div className="PokemonDetail__main__info">
           <h1>{thisPokemon.name}</h1>
-          <p style={{ backgroundColor: backgroundColor }}>
+          <p
+            id="PokemonDetail__main__type"
+            style={{ backgroundColor: backgroundColor }}
+          >
             {thisPokemon.type.toUpperCase()}
           </p>
         </div>
@@ -49,7 +53,7 @@ const PokemonDetail = (props) => {
             <h3 style={{ color: backgroundColor }}>Stats</h3>
             {thisPokemon.stats.map((stat, i) => {
               return (
-                <p key={i}>
+                <p id="PokemonDetail__main__stats__stat" key={i}>
                   {stat.stat} : {stat.value}
                 </p>
               );
@@ -59,14 +63,22 @@ const PokemonDetail = (props) => {
           <div className="PokemonDetail__main__stats__column">
             <h3 style={{ color: backgroundColor }}>Abilities</h3>
             {thisPokemon.abilities.map((ability, i) => {
-              return <p key={i}>{ability}</p>;
+              return (
+                <p id="PokemonDetail__main__ability" key={i}>
+                  {ability}
+                </p>
+              );
             })}
           </div>
 
           <div className="PokemonDetail__main__stats__column">
             <h3 style={{ color: backgroundColor }}>Dimensions</h3>
-            <p>Height : {thisPokemon.height * 10} cm</p>
-            <p>Weight : {thisPokemon.weight / 10} kg</p>
+            <p id="PokemonDetail__main__stats__height">
+              Height : {thisPokemon.height * 10} cm
+            </p>
+            <p id="PokemonDetail__main__stats__weight">
+              Weight : {thisPokemon.weight / 10} kg
+            </p>
           </div>
 
           <div className="PokemonDetail__main__stats__column">

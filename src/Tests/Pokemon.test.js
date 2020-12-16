@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 
 //Component
-import Pokemon from "./Pokemon";
+import Pokemon from "../Components/Pokemon";
 
 const data = {
   name: "pokemon-name",
