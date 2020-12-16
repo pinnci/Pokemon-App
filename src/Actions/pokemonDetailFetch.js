@@ -1,6 +1,6 @@
-export const pokemonDetailFetch = (pokemon) =>{
-    return{
-        type: 'pokemonDetailFetch',
-        payload : pokemon
-    }
-}
+export const pokemonDetailFetch = (pokemon) => {
+  return {
+    type: "pokemonDetailFetch",
+    payload: pokemon,
+  };
+};

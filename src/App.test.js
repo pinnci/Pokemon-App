@@ -1,8 +1,25 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render } from "@testing-library/react";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+//Store
+import { createStore } from "redux";
+
+//Provider
+import { Provider } from "react-redux";
+
+//Reducer
+import AllReducers from "./Reducers/";
+
+import App from "./App";
+
+const store = createStore(
+  AllReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+it("renders without crashing", () => {
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 });

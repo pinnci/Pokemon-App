@@ -1,36 +1,36 @@
-import React from 'react';
+import React from "react";
 
 //Selector
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
 
 //CSSTransition
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from "react-transition-group";
 
 //Components
-import Navigation from '../Components/Navigation';
-import ListPokemons from '../Components/ListPokemons';
-import Loading from '../Components/Loading';
+import Navigation from "../Components/Navigation";
+import ListPokemons from "../Components/ListPokemons";
+import Loading from "../Components/Loading";
 
 const MainView = () => {
-    const Pokemons = useSelector(state => state.Pokemons)  
-    const isLoading = useSelector(state => state.Loading);
+  const Pokemons = useSelector((state) => state.Pokemons);
+  const isLoading = useSelector((state) => state.Loading);
 
-    return(
-        <div className="view main">
-            <Navigation />
-            
-            {isLoading ? <Loading /> : ''}
+  return (
+    <div className="view main">
+      <Navigation />
 
-            <CSSTransition
-                in={!isLoading && Pokemons.length > 0 }
-                timeout={300}
-                classNames="animate-list"
-                unmountOnExit
-                >
-                <ListPokemons />
-            </CSSTransition> 
-        </div>
-    )
-}
+      {isLoading ? <Loading /> : ""}
+
+      <CSSTransition
+        in={!isLoading && Pokemons.length > 0}
+        timeout={300}
+        classNames="animate-list"
+        unmountOnExit
+      >
+        <ListPokemons />
+      </CSSTransition>
+    </div>
+  );
+};
 
 export default MainView;

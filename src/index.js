@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 //Store
-import { createStore } from 'redux';
+import { createStore } from "redux";
 
 //Provider
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 
 //Reducer
-import AllReducers from './Reducers/';
+import AllReducers from "./Reducers/";
 
 const store = createStore(
   AllReducers,
@@ -23,7 +23,7 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 reportWebVitals();
