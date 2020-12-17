@@ -16,12 +16,24 @@
     grid-column-gap: 15px;
     grid-row-gap: 15px;
   }
+
+  .Loading-Container {
+    .Loading {
+      margin-left: -4%;
+    }
+  }
 }
 
 @media screen and (max-width: 555px) {
   .PokemonDetail {
     .PokemonDetail__main {
       padding: 1em 2em;
+    }
+  }
+
+  .Loading-Container {
+    .Loading {
+      margin-left: -8%;
     }
   }
 }

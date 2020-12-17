@@ -10,11 +10,11 @@
     left: 50%;
     height: 62.5px;
     width: 62.5px;
-    margin-left: -21.2px;
+    margin-left: -2%;
     border: 3.25px solid #383b4f;
     border-radius: 50%;
     background-image: linear-gradient(#f51939 31.25px, white 31.25px);
-    position: relative;
+    position: absolute;
     animation: load 2s infinite;
 
     &::before {
