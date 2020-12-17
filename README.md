@@ -4,6 +4,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
 
+Link - https://pokemon-app-pinnci.herokuapp.com/
+
 ## Description
 
 Whole project is wrapped in Redux framework, which holds all app's states. It consists of four states.
