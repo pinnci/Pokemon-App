@@ -55,20 +55,6 @@ const InitialFetch = () => {
                 abilities: response.data.abilities.map((ability) =>
                   capitalize(ability.ability.name)
                 ),
-                stats: response.data.stats.map((stat) => {
-                  return {
-                    stat: capitalize(stat.stat.name),
-                    value: stat.base_stat,
-                  };
-                }),
-                weight: response.data.weight,
-                height: response.data.height,
-                sprites: [
-                  response.data.sprites.front_default,
-                  response.data.sprites.back_default,
-                  response.data.sprites.front_shiny,
-                  response.data.sprites.back_shiny,
-                ],
               };
 
               //Send to redux state
