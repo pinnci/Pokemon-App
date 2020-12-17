@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 
 //Actions
 import { hideErrorScreen } from "../Actions";
-import { turnOffLoading, turnOnLoading } from "../Actions";
 
 //Components
 import Navigation from "../Components/Navigation";
@@ -22,10 +21,9 @@ import Refresh from "../Assets/Icons/Refresh";
 const ErrorView = () => {
   let dispatch = useDispatch();
 
+  //Try to reload and fetch data
   const tryagain = () => {
     dispatch(hideErrorScreen());
-    dispatch(turnOnLoading());
-    dispatch(turnOffLoading());
   };
   return (
     <div className="view error">

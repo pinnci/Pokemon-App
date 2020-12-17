@@ -10,6 +10,7 @@ import { CSSTransition } from "react-transition-group";
 import Navigation from "../Components/Navigation";
 import ListPokemons from "../Components/ListPokemons";
 import Loading from "../Components/Loading";
+import InitialFetch from "../Fetching/InitialFetch";
 
 const MainView = () => {
   const Pokemons = useSelector((state) => state.Pokemons);
@@ -18,6 +19,8 @@ const MainView = () => {
   return (
     <div className="view main">
       <Navigation />
+
+      {!Pokemons[0] && !isLoading ? <InitialFetch /> : ""}
 
       {isLoading ? <Loading /> : ""}
 

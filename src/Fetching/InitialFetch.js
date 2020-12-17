@@ -84,7 +84,7 @@ const InitialFetch = () => {
         dispatch(turnOffLoading());
         dispatch(showErrorScreen());
       });
-  }, [debounceMainViewAnimation, dispatch]);
+  }, [dispatch, debounceMainViewAnimation]);
 
   return null;
 };

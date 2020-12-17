@@ -9,14 +9,10 @@ import MainView from "./Views/MainView";
 import PokemonDetailView from "./Views/PokemonDetailView";
 import ErrorView from "./Views/ErrorView";
 
-//Components
-import InitialFetch from "./Fetching/InitialFetch";
-
 //Styles
 import "./Assets/Styles/index.scss";
 
 function App() {
-  const Pokemons = useSelector((state) => state.Pokemons);
   const isError = useSelector((state) => state.Error);
 
   return (
@@ -24,11 +20,7 @@ function App() {
       <div className="container">
         <Router>
           <Route exact path="/">
-            {Pokemons.length === 0 && !isError ? (
-              <InitialFetch />
-            ) : (
-              <MainView />
-            )}
+            <MainView />
           </Route>
 
           <Route exact path="/pokemons/:id">
