@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# Pokedex App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Simplified version of Pokédex made in React.js.
 
-## Available Scripts
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
 
-In the project directory, you can run:
+## Description
 
-### `npm start`
+Whole project is wrapped in Redux framework, which holds all app's states. It consists of four states.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Pokemons
+2. PokemonDetail
+3. Loading
+4. Error
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+These states are updated in two cases.
 
-### `npm test`
+- When app is initialized
+- When user click on Pokemon card to see more details about it
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 1. App initialization
 
-### `npm run build`
+When the app is initialized, Loading state change its value from false to true, so loading symbol will be visible and InitialFetch component is called. In this component I'm using [axios](https://github.com/axios/axios) to fetch data from [PokeApi](https://github.com/PokeAPI/pokeapi), specifically nine Pokémons. Response from this call is Pokemon's name and URL for additional info about that Pokemon. There I'm calling another axios calls on these URL's to get informations like name, type, image and abilities. When call for additional information is successful, I create an object (newPokemon) and fill it with these informations. Now I can finally dispatch this object to Pokemons state.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 2. Pokemon Detail
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+When user clicks on Pokemon card, Loading state change its value from false to true, so loading symbol will be visible. I'm using React-router-dom's useParams() method to get ID of clicked Pokémon. After that, DetailFetch component is called and ID is sent to this component as a prop. Here, I'm using axios to get additional information of that Pokemon based on ID (name, type, sprites, stats, weight, height, etc..). If this call is successful, I create an object (newPokemon) and fill it with these informations. Finally, this object is dispatched to PokemonDetail state.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Both of these cases first check whether the states are empty or not. If they are empty, only then calls will be made. This will prevent app from repeated fetching. 
 
-### `npm run eject`
+### Views
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+App consists of three views.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Main view (/)
+- Pokemon detail view (/pokemons:id)
+- Error view (/error)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+For switching between these views I'm using [React-router-dom](https://reactrouter.com/).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The Main view and Detail view will be displayed only after successful retrieval of data from PokeApi. If any of the calls detects an error, the application will be redirected to an error page (/error).
 
-## Learn More
+All views contains a Navigation component with a Pokémon logo, which redirects user to Main view (/) when clicked.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Main view
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Consists of Navigation component and ListPokemons component, which is responsible for displaying all of the Pokemons in the Pokemons state. They are displayed as a 'card' (Pokemon component), which contains name, image, abilities and background color which is changed depending on Pokemons type (/Components/colorSwitcher function). Also they serve as a link to Detail view.
 
-### Code Splitting
+#### Detail view
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Consists of Navigation component and PokemonDetail component, which is responsible for displaying all of the information about displayed Pokémon. Color switcher function is also used here. (Changes background color and color of headings dependind on pokemon type).
 
-### Analyzing the Bundle Size
+#### Error view
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Consists of Navigation component, sad Pokémon image, error message and button, which will try to reload page.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Notes
 
-### Advanced Configuration
+- Application is fully responsive
+- Try to click on sprites images in PokemonDetail view (Hero image will change).
+- InitialFetch and DetailFetch loading animation takes about three seconds. It's on purpose to make feeling like real loading. I'm debouncing Loading action to set state to false, when axios call is successful (debounce from Lodash).
+- 'Go back' arrow will appear in Navigation only on PokemonDetail view.
+- In SRC folder, you can find 'Tests' folder, which contains of four test files (14 tests total). 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Plugins
 
-### Deployment
+- Axios - API calls
+- Node-sass - Styling
+- React-trasition-group - Animation when data is successfully fetched
+- React-router-dom - Routing between views
+- Redux - State
+- React-redux - Using state 
+- Enzyme - Testing
+- Lodash - Debouncing actions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Possible upgrades
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Add search box, where user can type any Pokémon's name or ID. Call to PokeApi will be made with value of that search box. User will get all details about searched Pokémon. 
