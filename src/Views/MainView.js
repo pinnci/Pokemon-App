@@ -24,7 +24,7 @@ const MainView = () => {
       <CSSTransition
         in={!isLoading && Pokemons.length > 0}
         timeout={300}
-        classNames="animate-list"
+        classNames="animate-content"
         unmountOnExit
       >
         <ListPokemons />

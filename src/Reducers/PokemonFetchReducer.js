@@ -1,6 +1,4 @@
-const initialState = [];
-
-const PokemonReducer = (state = initialState, action) => {
+const PokemonFetchReducer = (state = [], action) => {
   switch (action.type) {
     case "initialFetch":
       return [...state, action.payload];
@@ -10,4 +8,4 @@ const PokemonReducer = (state = initialState, action) => {
   }
 };
 
-export default PokemonReducer;
+export default PokemonFetchReducer;

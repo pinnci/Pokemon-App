@@ -7,10 +7,10 @@ import { useDispatch } from "react-redux";
 import { debounce } from "lodash";
 
 //Actions
-import { initialFetch } from "../Actions/FetchActions.js";
-import { turnOffLoading } from "../Actions/LoadingActions";
-import { turnOnLoading } from "../Actions/LoadingActions";
-import { showErrorScreen } from "../Actions/ErrorActions";
+import { initialFetch } from "../Actions";
+import { turnOffLoading } from "../Actions";
+import { turnOnLoading } from "../Actions";
+import { showErrorScreen } from "../Actions";
 
 //Axios
 import axios from "axios";
@@ -18,7 +18,7 @@ import axios from "axios";
 const InitialFetch = () => {
   const dispatch = useDispatch();
 
-  //Capitalize strings
+  //Capitalize pokemon info
   const capitalize = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
@@ -28,7 +28,7 @@ const InitialFetch = () => {
     dispatch(turnOffLoading());
   }, 3000);
 
-  //When app starts, get 9 pokemons, then get additional pokemon info (id, name, image url, type, abilities)
+  //When app starts, get 9 pokemons, then get additional pokemon info (id, name, image url, type, abilities, stats, etc..)
   useEffect(() => {
     dispatch(turnOnLoading());
 
@@ -41,8 +41,8 @@ const InitialFetch = () => {
         //Get additional info
         pokemonUrls.map((url) =>
           axios.get(url).then(function (response) {
-            //If pokemons name contains - do not add him to state.
-            //We want only main pokemon forms, but there were plenty of secondary forms which were divided by -
+            //If pokemons name contains '-' do not add him to state.
+            //We want only main pokemon forms, but there were plenty of secondary forms which were divided by '-'.
             if (response.data.name.indexOf("-") >= 0) {
               return;
             } else {

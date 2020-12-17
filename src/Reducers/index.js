@@ -3,13 +3,13 @@ import { combineReducers } from "redux";
 
 //Reducers
 import LoadingReducer from "./LoadingRecuder";
-import PokemonReducer from "./PokemonReducer";
-import PokemonDetailReducer from "./PokemonDetailReducer";
+import PokemonFetchReducer from "./PokemonFetchReducer";
+import PokemonDetailFetchReducer from "./PokemonDetailFetchReducer";
 import ErrorReducer from "./ErrorReducer";
 
 const AllReducers = combineReducers({
-  Pokemons: PokemonReducer,
-  PokemonDetail: PokemonDetailReducer,
+  Pokemons: PokemonFetchReducer,
+  PokemonDetail: PokemonDetailFetchReducer,
   Loading: LoadingReducer,
   Error: ErrorReducer,
 });

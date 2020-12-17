@@ -10,7 +10,7 @@ import PokemonDetailView from "./Views/PokemonDetailView";
 import ErrorView from "./Views/ErrorView";
 
 //Components
-import InitialFetch from "./Components/InitialFetch";
+import InitialFetch from "./Fetching/InitialFetch";
 
 //Styles
 import "./Assets/Styles/index.scss";
@@ -24,7 +24,11 @@ function App() {
       <div className="container">
         <Router>
           <Route exact path="/">
-            {Pokemons.length === 0 || isError ? <InitialFetch /> : <MainView />}
+            {Pokemons.length === 0 && !isError ? (
+              <InitialFetch />
+            ) : (
+              <MainView />
+            )}
           </Route>
 
           <Route exact path="/pokemons/:id">

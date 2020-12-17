@@ -1,7 +1,7 @@
 import React from "react";
 
 //Link
-import { Link, BrowserRouter as Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //Logo
 import image from "../Assets/Img/pokemon-logo.png";

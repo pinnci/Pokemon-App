@@ -1,6 +1,4 @@
-const initialState = false;
-
-const LoadingReducer = (state = initialState, action) => {
+const LoadingReducer = (state = false, action) => {
   switch (action.type) {
     case "TURN_ON":
       return (state = true);

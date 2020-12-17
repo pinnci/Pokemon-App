@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 //Actions
-import { hideErrorScreen } from "../Actions/ErrorActions";
-import { turnOffLoading, turnOnLoading } from "../Actions/LoadingActions";
+import { hideErrorScreen } from "../Actions";
+import { turnOffLoading, turnOnLoading } from "../Actions";
 
 //Components
 import Navigation from "../Components/Navigation";
 
-//Errorview image
+//Image
 import ErrorViewImage from "../Assets/Img/error-image.png";
 
 //Refresh icon

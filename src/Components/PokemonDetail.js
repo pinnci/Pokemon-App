@@ -1,7 +1,7 @@
 //iseState, useRef, useEffect
 import React, { useState, useRef, useEffect } from "react";
 
-//Color switcher
+//Switch card backgorund color depending on pokemon type
 import { colorSwitcher } from "./PokemonSwitchColor";
 
 const PokemonDetail = (props) => {

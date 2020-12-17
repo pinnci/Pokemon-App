@@ -3,31 +3,41 @@ import { useEffect } from "react";
 //Selector, Dispatch
 import { useDispatch } from "react-redux";
 
-//Actions
-import { pokemonDetailFetch } from "../Actions/pokemonDetailFetch.js";
-import { turnOffLoading } from "../Actions/LoadingActions";
-import { turnOnLoading } from "../Actions/LoadingActions";
-import { showErrorScreen } from "../Actions/ErrorActions";
+//Lodash - debounce
+import { debounce } from "lodash";
 
-//Axios
 import axios from "axios";
 
-const PokemonDetailFetch = (props) => {
-  let id = props.id;
-  const dispatch = useDispatch();
-  let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+//Actions
+import { pokemonDetailFetch } from "../Actions";
+import { turnOffLoading } from "../Actions";
+import { turnOnLoading } from "../Actions";
+import { showErrorScreen } from "../Actions";
 
-  //Capitalize strings
+const DetailFetch = (props) => {
+  const id = props.id;
+  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  const dispatch = useDispatch();
+
+  //Capitalize pokemon data
   const capitalize = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
+  //Simulate loading screen
+  const debounceDetailViewAnimation = debounce(() => {
+    dispatch(turnOffLoading());
+  }, 3000);
+
+  //When pokemon detail state is empty or pokemon id != id of already fetched pokemon, fetch pokemon by id and get its info.
   useEffect(() => {
     dispatch(turnOnLoading());
 
     axios
       .get(url)
       .then(function (response) {
+        //If pokemons name contains '-' do not add him to state.
+        //We want only main pokemon forms, but there were plenty of secondary forms which were divided by '-'.
         if (response.data.name.indexOf("-") >= 0) {
           return;
         } else {
@@ -60,7 +70,7 @@ const PokemonDetailFetch = (props) => {
           dispatch(pokemonDetailFetch(newPokemon));
 
           //Turn off loading
-          dispatch(turnOffLoading());
+          debounceDetailViewAnimation();
         }
       })
       .catch((error) => {
@@ -70,9 +80,9 @@ const PokemonDetailFetch = (props) => {
         //Show error screen
         dispatch(showErrorScreen());
       });
-  }, [url, dispatch]);
+  }, [debounceDetailViewAnimation, dispatch, url]);
 
   return null;
 };
 
-export default PokemonDetailFetch;
+export default DetailFetch;

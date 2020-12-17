@@ -1,4 +1,4 @@
-const PokemonDetailReducer = (state = false, action) => {
+const PokemonDetailFetchReducer = (state = false, action) => {
   switch (action.type) {
     case "pokemonDetailFetch":
       return (state = action.payload);
@@ -8,4 +8,4 @@ const PokemonDetailReducer = (state = false, action) => {
   }
 };
 
-export default PokemonDetailReducer;
+export default PokemonDetailFetchReducer;

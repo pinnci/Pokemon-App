@@ -10,8 +10,7 @@
     left: 50%;
     height: 62.5px;
     width: 62.5px;
-
-    margin-left: -31.2px;
+    margin-left: -21.2px;
     border: 3.25px solid #383b4f;
     border-radius: 50%;
     background-image: linear-gradient(#f51939 31.25px, white 31.25px);
@@ -48,6 +47,7 @@
   }
 }
 
+//Keyframes
 @keyframes load {
   50% {
     transform: scale(0.7);
